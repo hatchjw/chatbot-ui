@@ -27,9 +27,12 @@ interface WorkspaceLayoutProps {
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const router = useRouter()
 
-  const params = useParams()
-  const searchParams = useSearchParams()
-  const workspaceId = params.workspaceid as string
+ const params = useParams() as { workspaceid?: string } | null
+const searchParams = useSearchParams()
+const workspaceId = params?.workspaceid ?? ""   // empty string if not yet available
+
+if (!workspaceId) return <Loading />;
+
 
   const {
     setChatSettings,
